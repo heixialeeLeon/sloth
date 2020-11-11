@@ -23,6 +23,11 @@ class OfftakeInfo(object):
         return json.dumps(self, default=lambda o:o.__dict__, sort_keys=False)
 
 class OfftakeDetector(metaclass=ABCMeta):
+    def __init__(self, config, checkpoint, score_thr=0.5):
+        self.config = config
+        self.checkpoint = checkpoint
+        self.score_thr = 0.5
+        self.model = init_detector(config, checkpoint)
 
     def process(self, img) -> OfftakeInfo:
         '''
@@ -30,4 +35,15 @@ class OfftakeDetector(metaclass=ABCMeta):
         :param img: the img with left and right
         :return: the different areas 
         '''
-        pass
+        prediction = inference_detector(model, img)
+        results = []
+        for res in prediction:
+            bbox = res[:-1].round().astype(np.int32).tolist()
+            score = float(res[-1])
+            if score > self.score_thr:
+                results.append(dict(
+                    bbox=bbox,
+                    score=score
+                )))
+        results.sort(key=lambda x: x['bbox'][1])
+        return results
