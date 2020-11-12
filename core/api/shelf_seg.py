@@ -3,9 +3,8 @@ from typing import Dict, Tuple, Sequence, List
 import json
 import cv2
 import numpy as np
-from shapely.geometry import Polygon, MultiPoint
-from mmdet.apis import inference_detector, init_detector, show_result_pyplot
-from .utils import remove_overlap, filter_results, PolygonFit
+from mmdet.apis import inference_detector, init_detector
+from core.api.utils import remove_overlap, filter_results, PolygonFit
 
 class RowInfo(object):
     def __init__(self, row_index: int, location: List):

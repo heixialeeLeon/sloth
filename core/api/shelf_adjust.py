@@ -1,15 +1,12 @@
 from abc import abstractclassmethod, ABCMeta
 from typing import Dict, Tuple, Sequence, List
 import numpy as np
-from .shelf_seg import ShelfSegmentation
+import cv2
 
 class ShelfAdjust(metaclass=ABCMeta):
-    def __init__(self):
-        self.shelf_seg = ShelfSegmentation(
-            config="",
-            checkpoint=""
-        )
-        self.img_sim = ImageSimilarity("mnas")
+    def __init__(self, shelf_seg, img_sim):
+        self.shelf_seg = shelf_seg
+        self.img_sim = img_sim
         self.shelf_size = (128, 32)
         self.pic_size = (512, 640)
 

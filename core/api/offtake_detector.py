@@ -1,6 +1,9 @@
 from abc import abstractclassmethod, ABCMeta
 from typing import Dict, Tuple, Sequence, List
 import json
+import cv2
+import numpy as np
+from mmdet.apis import inference_detector, init_detector
 
 class OfftakeArea(object):
     def __init__(self, type: int, location: List):
@@ -44,6 +47,6 @@ class OfftakeDetector(metaclass=ABCMeta):
                 results.append(dict(
                     bbox=bbox,
                     score=score
-                )))
+                ))
         results.sort(key=lambda x: x['bbox'][1])
         return results

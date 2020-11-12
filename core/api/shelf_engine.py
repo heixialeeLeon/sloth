@@ -8,9 +8,9 @@ class ShelfEngine(metaclass=ABCMeta):
     '''
     the main class for the shelf related function
     '''
-    def __init__(self):
-        self.shelf_adjust = ShelfSegmentation(config="", checkpoint="")
-        self.offtake_det = OfftakeDetector(config="", checkpoint="")
+    def __init__(self, shelf_adjust, offtake_det):
+        self.shelf_adjust = shelf_adjust
+        self.offtake_det = offtake_det
 
     def diff_areas(self, img) -> OfftakeInfo:
         '''
