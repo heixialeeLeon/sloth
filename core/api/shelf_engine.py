@@ -1,8 +1,6 @@
 from abc import abstractclassmethod, ABCMeta
 from typing import Dict, Tuple, Sequence, List
 from core.api.offtake_detector import OfftakeInfo
-from core.api.shelf_adjust import ShelfSegmentation
-from core.api.offtake_detector import OfftakeDetector
 
 class ShelfEngine(metaclass=ABCMeta):
     '''
@@ -18,5 +16,5 @@ class ShelfEngine(metaclass=ABCMeta):
         :param img:
         :return:
         '''
-        adjust_img = self.shelf_adjust(img)
-        return self.offtake_det(adjust_img)
+        adjust_img = self.shelf_adjust.process(img)
+        return self.offtake_det.process(adjust_img)

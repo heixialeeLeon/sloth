@@ -29,7 +29,7 @@ class OfftakeDetector(metaclass=ABCMeta):
     def __init__(self, config, checkpoint, score_thr=0.5):
         self.config = config
         self.checkpoint = checkpoint
-        self.score_thr = 0.5
+        self.score_thr = score_thr
         self.model = init_detector(config, checkpoint)
 
     def process(self, img) -> OfftakeInfo:
@@ -38,7 +38,7 @@ class OfftakeDetector(metaclass=ABCMeta):
         :param img: the img with left and right
         :return: the different areas 
         '''
-        prediction = inference_detector(model, img)
+        prediction = inference_detector(self.model, img)[0]
         results = []
         for res in prediction:
             bbox = res[:-1].round().astype(np.int32).tolist()

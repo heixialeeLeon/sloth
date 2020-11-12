@@ -8,7 +8,7 @@ class ShelfAdjust(metaclass=ABCMeta):
         self.shelf_seg = shelf_seg
         self.img_sim = img_sim
         self.shelf_size = (128, 32)
-        self.pic_size = (512, 640)
+        self.pic_size = (256, 320)
 
     def process(self, img):
         '''
@@ -24,7 +24,7 @@ class ShelfAdjust(metaclass=ABCMeta):
         left = [res for res in left if len(res["polygon"]) == 4]
         right = [res for res in right if len(res["polygon"]) == 4]
         Nl, Nr = len(left), len(right)
-        if min(Nl, Nr) <= 2:
+        if min(Nl, Nr) <= 1:
             return img
 
         cut_imgs = []
@@ -73,7 +73,7 @@ class ShelfAdjust(metaclass=ABCMeta):
         feat_left = features[:1]
         feat_right = features[1:]
         sim_mat = self.img_sim.calc_similarity_matrix(feat_left, feat_right)[0]
-
+        print(sim_mat)
         if sim_mat[0] / sim_mat[1] > 1.2:
             img_corr = np.concatenate([img_l, img_rx], 1)
             return img_corr
