@@ -15,5 +15,5 @@ similarity_model =  EasyDict(dict(
 offtake_model = EasyDict(dict(
     device = "cuda",
     model_config="configs/offtake_faster_rcnn_r50_fpn.py",
-    model_checkpoint= "models/offtake_frcnn_r50-560f75cf.pth",
+    model_checkpoint= "models/offtake_frcnn_r50-6b9c2a72.pth",
 ))
