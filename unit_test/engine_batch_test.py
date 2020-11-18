@@ -10,6 +10,7 @@ from core.api.image_similarity import ImageSimilarity
 from core.api.offtake_detector import OfftakeDetector
 from core.api.shelf_engine import ShelfEngine
 from utils.json_utils import read_json_file,get_bbox_from_json
+from utils.metrics import get_metrics
 from glob import glob
 
 shelf_seg = ShelfSegmentation(shelf_model["model_config"], shelf_model["model_checkpoint"])
@@ -18,7 +19,7 @@ shelf_adjust = ShelfAdjust(shelf_seg, img_sim)
 offtake_det = OfftakeDetector(offtake_model["model_config"], offtake_model["model_checkpoint"])
 engine = ShelfEngine(shelf_adjust, offtake_det)
 
-test_folder = "/home/leon/data/offtake_val"
+test_folder = "test_imgs/offtake_val"
 
 def show_ground_gt(img, json_path):
     json_data = read_json_file(json_path)
@@ -54,9 +55,25 @@ def show_detect_gt_result_split():
         cv2.imshow("diff", img)
         cv2.waitKey(0)
 
+def test_detect_metrics():
+    tps, fns, fps = 0, 0, 0
+    for img_path in glob(test_folder+"/*.jpg"):
+        json_path = str(img_path)[:-3] + "json"
+        img = cv2.imread(str(img_path))
+        results = engine.diff_areas(img)
+        predictions = [item['bbox'] for item in results]
+        ground_truths = get_bbox_from_json(read_json_file(json_path))
+        tp, fn, fp = get_metrics(predictions, ground_truths, iou_thres=0.3)
+        tps += tp
+        fns += fn
+        fps += fp
+    precision = tps / (tps + fps)
+    recall = tps / (tps + fns)
+    f1_score = 2 * precision * recall / (precision + recall)
+    print(f"precision: {precision:.4f}, recall: {recall:.4f}, f1_score: {f1_score:.4f}")
 
 if __name__ == "__main__":
-    #show_detect_gt_result()
-    show_detect_gt_result_split()
-
+    # show_detect_gt_result()
+    # show_detect_gt_result_split()
+    test_detect_metrics()
 
