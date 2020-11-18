@@ -2,12 +2,13 @@ import sys
 sys.path.append(".")
 import cv2
 import numpy as np
-from configs.config import offtake_model
+#from configs.config import offtake_model
+from configs.unit_test_config import offtake_model
 from core.api.offtake_detector import OfftakeDetector
 
 
 offtake_det = OfftakeDetector(offtake_model["model_config"], offtake_model["model_checkpoint"])
-img = cv2.imread("test_imgs/offtake_test.jpg")
+img = cv2.imread("../test_imgs/offtake_test.jpg")
 result = offtake_det.process(img)
 for item in result:
     bbox = item['bbox']

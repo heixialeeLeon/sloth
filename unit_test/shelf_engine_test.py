@@ -2,7 +2,8 @@ import sys
 sys.path.append(".")
 import cv2
 import numpy as np
-from configs.config import shelf_model, similarity_model, offtake_model
+#from configs.config import shelf_model, similarity_model, offtake_model
+from configs.unit_test_config import shelf_model, similarity_model, offtake_model
 from core.api.shelf_seg import ShelfSegmentation
 from core.api.shelf_adjust import ShelfAdjust
 from core.api.image_similarity import ImageSimilarity
@@ -15,7 +16,7 @@ shelf_adjust = ShelfAdjust(shelf_seg, img_sim)
 offtake_det = OfftakeDetector(offtake_model["model_config"], offtake_model["model_checkpoint"])
 engine = ShelfEngine(shelf_adjust, offtake_det)
 
-img = cv2.imread("test_imgs/adjust_test.jpg")
+img = cv2.imread("../test_imgs/adjust_test.jpg")
 result = engine.diff_areas(img)
 for item in result:
     bbox = item['bbox']

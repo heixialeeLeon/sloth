@@ -2,12 +2,13 @@ import sys
 sys.path.append(".")
 import cv2
 import numpy as np
-from configs.config import shelf_model
+#from configs.config import shelf_model
+from configs.unit_test_config import shelf_model
 from core.api.shelf_seg import ShelfSegmentation
 
 
 shelf_seg = ShelfSegmentation(shelf_model["model_config"], shelf_model["model_checkpoint"])
-img = cv2.imread("test_imgs/shelf_test.jpg")
+img = cv2.imread("../test_imgs/shelf_test.jpg")
 result = shelf_seg.process(img)
 for item in result:
     poly = np.array(item['polygon']).reshape(-1, 1, 2)
