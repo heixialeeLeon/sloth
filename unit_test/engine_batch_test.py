@@ -16,7 +16,7 @@ from glob import glob
 shelf_seg = ShelfSegmentation(shelf_model["model_config"], shelf_model["model_checkpoint"])
 img_sim = ImageSimilarity(similarity_model["model_config"], similarity_model["model_checkpoint"])
 shelf_adjust = ShelfAdjust(shelf_seg, img_sim)
-offtake_det = OfftakeDetector(offtake_model["model_config"], offtake_model["model_checkpoint"])
+offtake_det = OfftakeDetector(offtake_model["model_config"], offtake_model["model_checkpoint"], score_thr=0.6)
 engine = ShelfEngine(shelf_adjust, offtake_det)
 
 test_folder = "test_imgs/offtake_val"

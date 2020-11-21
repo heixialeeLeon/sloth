@@ -1,6 +1,6 @@
 from easydict import EasyDict
 
-prefix = "../"
+prefix = "./"
 
 shelf_model = EasyDict(dict(
     device = "cuda",
@@ -17,5 +17,5 @@ similarity_model =  EasyDict(dict(
 offtake_model = EasyDict(dict(
     device = "cuda",
     model_config= prefix+"configs/offtake_faster_rcnn_r50_fpn.py",
-    model_checkpoint= prefix + "models/offtake_frcnn_r50-6b9c2a72.pth",
+    model_checkpoint= prefix + "models/offtake_frcnn_r50-bf6dfe54.pth",
 ))
