@@ -51,6 +51,12 @@ def overlap_1d(A, B):
     else:
         return float(y - x) / min(y1 - x1, y2 - x2)
 
+def check_bbox(bbox, poly):
+    x1, y1, x2, y2 = bbox
+    bbox = Polygon([[x1, y1], [x2, y1], [x2, y2], [x1, y2]])    
+    poly = Polygon(poly).convex_hull
+    return poly.intersects(bbox)
+
 def filter_results(results):
     if len(results) <= 1:
         return results

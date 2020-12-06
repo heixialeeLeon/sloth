@@ -14,6 +14,12 @@ similarity_model =  EasyDict(dict(
     model_checkpoint= prefix+"models/mnas.pth",
 ))
 
+similarity2_model =  EasyDict(dict(
+    device = "cuda",
+    model_config="mnas",
+    model_checkpoint= prefix+"models/mnas_sim.pth",
+))
+
 offtake_model = EasyDict(dict(
     device = "cuda",
     model_config= prefix+"configs/offtake_faster_rcnn_r50_fpn.py",
